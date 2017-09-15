@@ -1,0 +1,45 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "dynamodb:DescribeTable",
+                "dynamodb:Scan"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:XXXXXXXXXXX:table/elements"
+            ]
+        },
+        {
+            "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+            ],
+            "Effect": "Allow",
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:XXXXXXXXXXX:table/elements/stream/2017-09-14T14:16:12.788"
+            ]
+        },
+        {
+            "Sid": "Stmt1505291897000",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeAsync",
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws:lambda:us-east-1:XXXXXXXXXXX:function:dynamostream-to-es"
+            ]
+        },
+        {
+            "Action": [
+                "es:ESHttpPost"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:es:us-east-1:XXXXXXXXXXX:domain/elementsdomain/*"
+        }
+    ]
+}

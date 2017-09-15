@@ -1,0 +1,12 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "es:ESHttpPost"
+            ],
+            "Effect": "Allow",
+            "Resource": "arn:aws:es:us-east-1:XXXXXXXXXXXXX:domain/elementsdomain/*"
+        }
+    ]
+}
