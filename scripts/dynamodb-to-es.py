@@ -54,7 +54,7 @@ class ES_Exception(Exception):
 # Low-level POST data to Amazon Elasticsearch Service generating a Sigv4 signed request
 def post_data_to_es(payload, region, creds, host, path, method='POST', proto='https://'):
    '''Post data to ES endpoint with SigV4 signed http headers'''
-   req = AWSRequest(method=method, url=proto + host + urllib.quote(path), data=payload, headers={'Host': host})
+   req = AWSRequest(method=method, url=proto + host + urllib.quote(path), data=payload, headers={'Host': host, 'Content-Type' : 'application/json'})
    SigV4Auth(creds, 'es', region).add_auth(req)
    http_session = BotocoreHTTPSession()
    res = http_session.send(req.prepare())
