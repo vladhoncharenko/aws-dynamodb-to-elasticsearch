@@ -12,19 +12,24 @@ reports = []
 object_amount = 0
 partSize = 0
 
-
 def main():
     parser = argparse.ArgumentParser(description='Set-up importing to dynamodb')
+    parser.add_argument('--rn', metavar='R', help='AWS region')
     parser.add_argument('--tn', metavar='T', help='table name')
     parser.add_argument('--ak', metavar='AK', help='aws access key')
     parser.add_argument('--sk', metavar='AS', help='aws secret key')
     parser.add_argument('--esarn', metavar='ESARN', help='event source ARN')
     parser.add_argument('--lf', metavar='LF', help='lambda function that posts data to es')
 
-    aws_region = "us-east-1"
     scan_limit = 300
     args = parser.parse_args()
-    import_dynamodb_items_to_es(args.tn, args.sk, args.ak, aws_region, args.esarn, args.lf, scan_limit)
+    
+    if (args.rn is None):
+        print('Specify region parameter (-rn)')
+        return
+
+    client = boto3.client('lambda', region_name=args.rn)
+    import_dynamodb_items_to_es(args.tn, args.sk, args.ak, args.rn, args.esarn, args.lf, scan_limit)
 
 
 def import_dynamodb_items_to_es(table_name, aws_secret, aws_access, aws_region, event_source_arn, lambda_f, scan_limit):
